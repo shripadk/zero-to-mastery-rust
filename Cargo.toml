@@ -17,3 +17,7 @@ path = "./examples/async-rust/tokio/task-management-spawn.rs"
 [[example]]
 name = "task-management-join"
 path = "./examples/async-rust/tokio/task-management-join.rs"
+
+[[example]]
+name = "task-management-spawn-join"
+path = "./examples/async-rust/tokio/task-management-spawn-join.rs"

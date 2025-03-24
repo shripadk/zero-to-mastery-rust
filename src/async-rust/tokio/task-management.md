@@ -30,3 +30,18 @@ Let us breakdown what is happening in the code above:
   and waits for both to finish.
 * Unlike `tokio::spawn`, `join!` does not create separate background tasks;
   instead, it runs the tasks within the same task thread.
+
+### Combining `tokio::spawn` with `tokio::join!`
+
+Now let us combine `tokio::spawn` (for background tasks) with `tokio::join!`
+(for structured concurrency).
+
+{{#playground ../../../examples/async-rust/tokio/task-management-spawn-join.rs ignore}}
+
+Let us breakdown what is happening in the code above:
+
+* `tokio::spawn(task1())` runs `task1` in the background.
+* `tokio::spawn(task2())` runs `task2` in the background.
+* `tokio::join!(handle1, handle2)` waits for both background tasks to complete.
+* Unlike the previous example, `tokio::spawn` creates actual **background
+  tasks**, which means they can run even if the main task moves forward.
