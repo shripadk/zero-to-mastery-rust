@@ -45,3 +45,20 @@ Let us breakdown what is happening in the code above:
 * `tokio::join!(handle1, handle2)` waits for both background tasks to complete.
 * Unlike the previous example, `tokio::spawn` creates actual **background
   tasks**, which means they can run even if the main task moves forward.
+
+## Handling Task Failures with `tokio::spawn`
+
+Since `tokio::spawn` runs tasks in the background, it returns a `JoinHandle<T>`
+that we must `.await` to retrieve the result. If the task panics,
+`JoinHandle::await` will return an `Err`.
+
+{{#playground ../../../examples/async-rust/tokio/task-management-task-failure.rs ignore}}
+
+Let us breakdown what is happening in the code above:
+
+* `tokio::spawn(successful_task())` returns `Ok("Task succeeded")`.
+* `tokio::spawn(failing_task())` panics, so `handle2.await` returns an `Err`.
+* We use `match` to check whether the task completed successfully or panicked.
+* Even though `failing_task()` panicked, the program **continues running**.
+* Tokio isolates panics in spawned tasks so that one failing task doesn't crash
+  the entire program.
