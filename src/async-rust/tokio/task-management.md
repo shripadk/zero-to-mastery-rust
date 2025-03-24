@@ -17,7 +17,7 @@ Let us breakdown what is happening in the code above:
 Even though Task 1 was spawned first, Task 2 completes first as it sleeps
 for a shorter duration.
 
-### Joining Multiple Tasks Efficiently
+## Joining Multiple Tasks Efficiently
 
 Instead of `.await`ing tasks sequentially, we can wait for multiple 
 tasks concurrently using `tokio::join!`.
@@ -31,7 +31,7 @@ Let us breakdown what is happening in the code above:
 * Unlike `tokio::spawn`, `join!` does not create separate background tasks;
   instead, it runs the tasks within the same task thread.
 
-### Combining `tokio::spawn` with `tokio::join!`
+## Combining `tokio::spawn` with `tokio::join!`
 
 Now let us combine `tokio::spawn` (for background tasks) with `tokio::join!`
 (for structured concurrency).
