@@ -10,4 +10,4 @@ edition = "2024"
 
 [output.html]
 default-theme="rust"
-preferred-dark-theme="ayu"
+preferred-dark-theme="rust"
