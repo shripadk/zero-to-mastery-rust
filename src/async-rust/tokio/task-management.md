@@ -154,3 +154,52 @@ Breakdown of above code:
 * Only the `else` branch gets evaluated and future polled. Note the difference 
   in how the `else` pattern is defined.
 
+## Optional `biased` mode to control `tokio::select!` polling execution order
+
+By default, `select!` uses pseudo-random mode to pick a branch randomly to check.
+This is done to ensure fairness. However, this can be disabled with `biased` mode, which will 
+cause `select!` to poll futures in the order they appear (from top to bottom). 
+
+{{#playground ../../../examples/async-rust/tokio/task-management-biased.rs ignore}}
+
+The `biased;` statement at the beginning of `tokio::select!` indicates that the branches 
+should be polled in the order they are written, rather than randomly. This ensures 
+a deterministic execution order, which is crucial in this context
+
+A `loop` is used to show how this execution order works:
+
+* The first branch contains an empty asynchronous block (`async {}`) and a precondition 
+  `if count < 1`. Since `count` starts at 0, this precondition is true during the 
+  first iteration. The handler increments `count` to 1 and asserts `count` equals 1.
+
+* The second branch is similar to first branch with only the precondition check
+  being `if count < 2`. This handler increments `count` to 2 and asserts `count` equals 2
+  during the second iteration of the loop.
+
+* The same happens to the third branch during the third iteration. `count` is incremented
+  to 3.
+
+* The final `else` branch executes during the fourth iteration of the `loop` as
+  `count` is now 3 and none of the other branches pass the precondition check.
+  The handler increments `count` to 4 and asserts `count` is 4 and finally breaks the loop.
+
+If `biased;` statement was not set at the begin beginning of `tokio::select!` then
+there is no guarantee of the branches being chosen in deterministic execution order
+as it would be pseudo-random by default.
+
+You can test for this case by commenting out the `biased;` statement and test run 
+the program multiple times.
+
+<div class="warning" style="font-size: 0.95em;">
+
+You can use `biased;` if you need to save on CPU cycles (used for pseudo-random number 
+generation) or if you need deterministic execution order. It is much more efficient.
+
+Caveat: It becomes your responsibility to ensure that the polling order of your 
+futures is fair. If, for example, you are selecting between a stream and a shutdown future, 
+and the stream has a huge volume of messages and zero or nearly zero time between them, 
+you should place the shutdown future earlier in the `select!` list to ensure that it is
+always polled, and will not be ignored due to the stream being constantly
+ready.
+
+</div>

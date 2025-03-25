@@ -37,3 +37,7 @@ path = "./examples/async-rust/tokio/task-management-task-precondition.rs"
 [[example]]
 name = "task-management-else"
 path = "./examples/async-rust/tokio/task-management-else.rs"
+
+[[example]]
+name = "task-management-biased"
+path = "./examples/async-rust/tokio/task-management-biased.rs"
