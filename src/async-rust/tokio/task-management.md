@@ -130,3 +130,25 @@ whether the branch is disabled or not. So it is preferable to not perform
 any side effects that would need to be rolled back in case of task cancellation.
 </div>
 
+## Optional `else` with `tokio::select!`
+
+The `tokio::select!` macro may include a single, optional `else`
+branch, which evaluates if none of the other branches match their patterns:
+
+```text,ignore
+else => <expression>
+```
+
+{{#playground ../../../examples/async-rust/tokio/task-management-else.rs ignore}}
+
+Breakdown of above code:
+
+* All tasks are spawned as separate background tasks.
+* `inside task 1`, `inside task 2`, `inside task 3` is printed to stdout when 
+  `handle1`, `handle2` and `handle3` async expressions gets evaluated. This 
+  happens **irrespective of whether the branches are enabled or not.**
+* The first and second branch are disabled and their futures not polled due
+  to precondition failure.
+* Only the `else` branch gets evaluated and future polled. Note the difference 
+  in how the `else` pattern is defined.
+
