@@ -62,3 +62,18 @@ Let us breakdown what is happening in the code above:
 * Even though `failing_task()` panicked, the program **continues running**.
 * Tokio isolates panics in spawned tasks so that one failing task doesn't crash
   the entire program.
+
+## Task Cancellation with `tokio::select!`
+
+Sometimes, you may want to **race multiple tasks** and cancel the slower one
+once the faster one completes. This is where `tokio::select!` comes in.
+
+{{#playground ../../../examples/async-rust/tokio/task-management-task-cancellation.rs ignore}}
+
+Breakdown of above code:
+
+* `tokio::select!` waits for **whichever task finishes first**.
+* The **faster task wins** (`fast_task()`), and the **slower task gets cancelled**
+  (`slow_task()` never completes).
+* `tokio::select!` moves on once the branch resolves returning the result which
+  is of type `&str`.
