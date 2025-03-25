@@ -77,3 +77,56 @@ Breakdown of above code:
   (`slow_task()` never completes).
 * `tokio::select!` moves on once the branch resolves returning the result which
   is of type `&str`.
+
+## Adding Preconditions with `tokio::select!`
+
+`tokio::select!` macro accepts one or more branches with the following pattern:
+
+```text,ignore
+<pattern> = <async expression> (, if <precondition>)? => <handler>,
+```
+
+As we saw from the [Task Cancellation](#task-cancellation-with-tokioselect) section above, 
+the branch selection depends on which branch completes first, resulting in cancellation of the
+remaining branches.
+
+Sometimes you may wish to disable a particular branch based on a precondition.
+`tokio::select!` allows you to do this. However, it will still evaluate the async
+expression as defined in the pattern above. The resulting future however is not
+polled.
+
+{{#playground ../../../examples/async-rust/tokio/task-management-task-precondition.rs ignore}}
+
+Breakdown of above code:
+
+We are running the same code twice with the only difference being the `run_task2`
+precondition flag that is set to `false` the first time and `true` the second time.
+
+Let us consider the case where `run_task2` is set to `false`:
+
+* Both tasks are spawned as separate background tasks.
+* `inside task 1` is printed to stdout when `handle1` async expression gets evaluated.
+* Even though `run_task2` is `false`, we still see the message `inside task 2`
+  printed to stdout. **This demonstrates that the async expression is evaluated
+  irrespective of disabling the branch. The future is however not polled.**
+* Because the branch is disabled, **`select!` picks the first branch (even though it
+  sleeps for longer duration)** and outputs `Task 1 completed`.
+
+Now consider the case where `run_task2` is set to `true`:
+
+* Both tasks are spawned as separate background tasks.
+* `inside task 1` is printed to stdout when `handle1` async expression gets evaluated.
+* With `run_task2` set to `true`, we see the message `inside task 2` printed to stdout. 
+  **The async expression is evaluated and since the branch is now enabled, 
+  `select!` polls this future when performing its branch selection.**
+* As the branch is enabled and has a smaller timeout set, **`select!` picks the 
+  second branch** and outputs `Task 2 completed` while cancelling Task 1's handle.
+
+<div class="warning" style="font-size: 0.95em;">
+Some important points to keep in mind:
+
+The async expressions will **ALWAYS** get evaluated irrespective of
+whether the branch is disabled or not. So it is preferable to not perform
+any side effects that would need to be rolled back in case of task cancellation.
+</div>
+
