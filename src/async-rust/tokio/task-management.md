@@ -203,3 +203,12 @@ always polled, and will not be ignored due to the stream being constantly
 ready.
 
 </div>
+
+# Implementing Timeouts
+
+You can use Tokio's builtin `timeout` to cancel a long running
+task.
+
+{{#playground ../../../examples/async-rust/tokio/task-management-timeout.rs ignore}}
+
+It should print `deadline has elapsed` to stderr.

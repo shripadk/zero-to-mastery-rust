@@ -41,3 +41,7 @@ path = "./examples/async-rust/tokio/task-management-else.rs"
 [[example]]
 name = "task-management-biased"
 path = "./examples/async-rust/tokio/task-management-biased.rs"
+
+[[example]]
+name = "task-management-timeout"
+path = "./examples/async-rust/tokio/task-management-timeout.rs"
