@@ -123,11 +123,13 @@ Now consider the case where `run_task2` is set to `true`:
   second branch** and outputs `Task 2 completed` while cancelling Task 1's handle.
 
 <div class="warning" style="font-size: 0.95em;">
+
 Some important points to keep in mind:
 
 The async expressions will **ALWAYS** get evaluated irrespective of
 whether the branch is disabled or not. So it is preferable to not perform
 any side effects that would need to be rolled back in case of task cancellation.
+
 </div>
 
 ## Optional `else` with `tokio::select!`
