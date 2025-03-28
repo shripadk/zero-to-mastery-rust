@@ -252,4 +252,14 @@ described above.
 * The `set` spawns **42** tasks, calculating fibonacci numbers from **0** to **42**.
 * Then `set.join_next().await` is called in a loop to return the tasks in order of completion.
 
+<div class="warning" style="font-size: 0.95em;">
+
+An important point to keep in mind:
+
+Tasks spawned using `spawn_blocking` cannot be aborted because they are not
+async. If you call `abort` on a `spawn_blocking` task it won't have any effect.
+Only exception is if the task hasn't started running yet, where calling `abort`
+may prevent the task from running.
+
+</div>
 
