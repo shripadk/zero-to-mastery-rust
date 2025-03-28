@@ -237,3 +237,19 @@ You can abort a collection of tasks spawned using `JoinSet`.
   before looping over the results of the spawned tasks.
 * Should output errors with `task {id} was cancelled` where `id` is the id of the task.
 
+# Spawn blocking code using `JoinSet`
+
+You can spawn blocking code on the blocking threadpool and store it in a `JoinSet`.
+Returns an `AbortHandle` much like the [Abort a `JoinSet`](#abort-a-joinset) section 
+described above.
+
+{{#playground ../../../examples/async-rust/tokio/task-management-joinset-blocking.rs ignore}}
+
+* We calculate a simple fibonacci number using the `fib(v: usize) -> usize` function.
+  This is a CPU intensive operation and hence is best handled in the blocking threadpool.
+* The `calculate_fib(value: usize)` function returns a `FibResult` that contains the value
+  passed, the result as well as time elapsed to run the CPU intensive operation.
+* The `set` spawns **42** tasks, calculating fibonacci numbers from **0** to **42**.
+* Then `set.join_next().await` is called in a loop to return the tasks in order of completion.
+
+

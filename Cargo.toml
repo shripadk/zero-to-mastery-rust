@@ -54,3 +54,7 @@ path = "./examples/async-rust/tokio/task-management-joinset.rs"
 [[example]]
 name = "task-management-joinset-abort"
 path = "./examples/async-rust/tokio/task-management-joinset-abort.rs"
+
+[[example]]
+name = "task-management-joinset-blocking"
+path = "./examples/async-rust/tokio/task-management-joinset-blocking.rs"
