@@ -227,3 +227,13 @@ When a `JoinSet` is dropped, all tasks in the `JoinSet` are immediately aborted.
 * Then a collection of tasks are spawned via the `set`.
 * Then `set.join_next().await` is called in a loop to return the tasks in order of completion.
 
+# Abort a `JoinSet`
+
+You can abort a collection of tasks spawned using `JoinSet`.
+
+{{#playground ../../../examples/async-rust/tokio/task-management-joinset-abort.rs ignore}}
+
+* We use the same example as above, except for introducing a `set.abort_all()` 
+  before looping over the results of the spawned tasks.
+* Should output errors with `task {id} was cancelled` where `id` is the id of the task.
+

@@ -51,3 +51,6 @@ path = "./examples/async-rust/tokio/task-management-timeout.rs"
 name = "task-management-joinset"
 path = "./examples/async-rust/tokio/task-management-joinset.rs"
 
+[[example]]
+name = "task-management-joinset-abort"
+path = "./examples/async-rust/tokio/task-management-joinset-abort.rs"
