@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+rand = "0.9.0"
 tokio = { version = "1.44.1", features = ["full"] }
 
 [[example]]
@@ -45,3 +46,8 @@ path = "./examples/async-rust/tokio/task-management-biased.rs"
 [[example]]
 name = "task-management-timeout"
 path = "./examples/async-rust/tokio/task-management-timeout.rs"
+
+[[example]]
+name = "task-management-joinset"
+path = "./examples/async-rust/tokio/task-management-joinset.rs"
+

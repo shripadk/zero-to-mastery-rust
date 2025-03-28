@@ -212,3 +212,18 @@ task.
 {{#playground ../../../examples/async-rust/tokio/task-management-timeout.rs ignore}}
 
 It should print `deadline has elapsed` to stderr.
+
+# Spawn collection of tasks using `JoinSet`
+
+You can spawn a collection of tasks using `JoinSet`. You can either await
+completion of some or all of the tasks in the set. And the tasks will be returned
+in the order they complete.
+
+When a `JoinSet` is dropped, all tasks in the `JoinSet` are immediately aborted.
+
+{{#playground ../../../examples/async-rust/tokio/task-management-joinset.rs ignore}}
+
+* First an empty unordered collection, called `set`, is created using `JoinSet::new`.
+* Then a collection of tasks are spawned via the `set`.
+* Then `set.join_next().await` is called in a loop to return the tasks in order of completion.
+
