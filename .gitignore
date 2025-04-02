@@ -4,3 +4,7 @@ book
 # Added by cargo
 
 /target
+
+# Ignoring main.rs as it is not relevant to the book
+# and is only used for quick tests
+src/main.rs
