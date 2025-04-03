@@ -25,3 +25,11 @@ with larger resolution than 1 ms.
 
 Maximum duration for a `sleep` is 2.2 years.
 </div>
+
+## Asynchronous `sleep`
+
+`tokio::time::sleep` is the asynchronous equivalent of `thread::sleep`.
+It creates a future that completes after the specified duration has elapsed.
+
+{{#playground ../../../examples/async-rust/tokio/basics-time-sleep.rs ignore}}
+
