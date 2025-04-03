@@ -33,3 +33,20 @@ It creates a future that completes after the specified duration has elapsed.
 
 {{#playground ../../../examples/async-rust/tokio/basics-time-sleep.rs ignore}}
 
+## Asynchronous `interval`
+
+An `Interval` creates a stream that yields values at a fixed period.
+The stream produces `()` values each time the interval elapses.
+You use `.tick().await` in a loop to wait for the next tick.
+
+{{#playground ../../../examples/async-rust/tokio/basics-time-interval.rs ignore}}
+
+Explanation:
+
+* `interval(Duration)` creates the `Interval` struct.
+* `interval.tick().await` returns a future that completes at next tick.
+* The first tick completes immediately. Subsequent ticks wait for the duration.
+* If the task takes longer than the interval duration to execute between
+  ticks, the interval might "miss" ticks to catch up, ensuring ticks don't
+  accumulate indefinitely if the receiver is slow.
+
