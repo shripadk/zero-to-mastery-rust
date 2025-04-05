@@ -50,3 +50,22 @@ Explanation:
   ticks, the interval might "miss" ticks to catch up, ensuring ticks don't
   accumulate indefinitely if the receiver is slow.
 
+## Asynchronous `timeout`
+
+This function attempts to run a future but imposes a time limit.
+It returns a `Result`.
+
+* `Ok(inner_result)`: The future completed within the time limit.
+  `inner_result` is the value the original future resolved to.
+* `Err(elapsed)`: The timeout elapsed before the future completed.
+  The original future is cancelled when the timeout occurs.
+
+{{#playground ../../../examples/async-rust/tokio/basics-time-timeout.rs ignore}}
+
+Explanation:
+
+* `timeout(duration, future)` takes the maximum duration and the future to run.
+* It returns a new future that resolves to `Result<future::Output, Elapsed>`.
+* `.await` on the timeout future waits for either the inner future to complete
+  or the duration to elapse.
+* If the timeout occurs, the inner future is dropped (cancelled).

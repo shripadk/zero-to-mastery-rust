@@ -22,6 +22,10 @@ name = "async-rust-basics-time-interval"
 path = "./examples/async-rust/tokio/basics-time-interval.rs"
 
 [[example]]
+name = "async-rust-basics-time-timeout"
+path = "./examples/async-rust/tokio/basics-time-timeout.rs"
+
+[[example]]
 name = "task-management-spawn"
 path = "./examples/async-rust/tokio/task-management-spawn.rs"
 
