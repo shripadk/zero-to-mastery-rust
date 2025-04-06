@@ -82,6 +82,10 @@ name = "io-asyncwriteext"
 path = "./examples/async-rust/tokio/io-asyncwriteext.rs"
 
 [[example]]
+name = "io-copy"
+path = "./examples/async-rust/tokio/io-copy.rs"
+
+[[example]]
 name = "concurrency-primitives-oneshot"
 path = "./examples/async-rust/tokio/concurrency-primitives-oneshot.rs"
 
