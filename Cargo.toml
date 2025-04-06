@@ -74,6 +74,10 @@ name = "task-management-joinset-blocking"
 path = "./examples/async-rust/tokio/task-management-joinset-blocking.rs"
 
 [[example]]
+name = "io-asyncreadext"
+path = "./examples/async-rust/tokio/io-asyncreadext.rs"
+
+[[example]]
 name = "concurrency-primitives-oneshot"
 path = "./examples/async-rust/tokio/concurrency-primitives-oneshot.rs"
 
