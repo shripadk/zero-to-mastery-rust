@@ -78,6 +78,10 @@ name = "io-asyncreadext"
 path = "./examples/async-rust/tokio/io-asyncreadext.rs"
 
 [[example]]
+name = "io-asyncwriteext"
+path = "./examples/async-rust/tokio/io-asyncwriteext.rs"
+
+[[example]]
 name = "concurrency-primitives-oneshot"
 path = "./examples/async-rust/tokio/concurrency-primitives-oneshot.rs"
 
