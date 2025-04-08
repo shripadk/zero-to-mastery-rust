@@ -86,3 +86,21 @@ System calls for reading/writing small amounts of data frequently can be ineffic
 * `AsyncBufReadExt`: Provides methods like `read_line` and `lines` (returns a stream of 
   lines) for types implementing `AsyncBufRead` (like `BufReader`).
 
+## Standard I/O: `stdin()`, `stdout()`, `stderr()`
+
+Tokio provides asynchronous handles to the standard input, output, and error streams
+of your process.
+
+{{#playground ../../../examples/io-std.rs ignore}}
+
+*Note*: Asynchronous interaction with standard I/O can sometimes be tricky depending on
+terminal behavior and whether the underlying OS handles are truly non-blocking. For 
+complex interactive applications, dedicated terminal handling crates might be better.
+
+* `tokio::io` provides the core asynchronous I/O traits (`AsyncRead`, `AsyncWrite`).
+* You primarily interact with them via the convenient `.await`-able methods from
+  `AsyncReadExt` and `AsyncWriteExt`.
+* Utilities like `copy` simplify data transfer.
+* `BufReader` and `BufWriter` improve performance for frequent small I/O operations
+  by adding buffering. `BufReader` enables line-based reading via `AsyncBufReadExt`.
+* `stdin`, `stdout`, `stderr` provide async access to standard process streams.
