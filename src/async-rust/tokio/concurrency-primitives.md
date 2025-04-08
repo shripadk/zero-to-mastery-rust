@@ -1,5 +1,19 @@
 # Concurrency Primitives
 
+## Mutex
+
+Provides asynchronous mutual exclusion. Only one task can hold the lock at any
+given time.
+
+{{#playground ../../../examples/primitive-mutex.rs ignore}}
+
+* `Mutex::new(data)`: Creates a new async mutex wrapping the data.
+* `Arc`: Used to share the `Mutex` safely across multiple tasks.
+* `mutex.lock().await`: Asynchronously acquires the lock. Returns a `MutexGuard`.
+* The `MutexGuard` implements `Deref` and `DerefMut`, allowing access to the protected
+  data.
+* The lock is automatically released when the `MutexGuard` is dropped.
+
 ## Oneshot channel
 
 For sending a single value from a single producer to a single consumer.
