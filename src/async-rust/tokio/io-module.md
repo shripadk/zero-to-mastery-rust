@@ -50,11 +50,11 @@ respectively, and they provide the familiar `.await`-able methods.
 
 Let us use `tokio::fs::File` as an example source that implements `AsyncRead`.
 
-{{#playground ../../../examples/async-rust/tokio/io-asyncreadext.rs ignore}}
+{{#playground ../../../examples/io-asyncreadext.rs ignore}}
 
 ## `AsyncWriteExt` — Writing Data Asynchronously
 
-{{#playground ../../../examples/async-rust/tokio/io-asyncwriteext.rs ignore}}
+{{#playground ../../../examples/io-asyncwriteext.rs ignore}}
 
 ## Utility Functions: `copy` and `copy_bidirectional`
 
@@ -65,7 +65,7 @@ These are helpers for efficiently transferring data between `AsyncRead` and
   until EOF is reached on the `reader`. Returns the total number of bytes copied.
   Uses an internal buffer.
 
-{{#playground ../../../examples/async-rust/tokio/io-copy.rs ignore}}
+{{#playground ../../../examples/io-copy.rs ignore}}
 
 * `io::copy_bidirectional(a, b)`: Copies data from `a` to `b` AND from `b`
   to `a` simultaneously. Useful for proxying network connections. Returns the

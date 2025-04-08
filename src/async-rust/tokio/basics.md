@@ -6,7 +6,7 @@ Tokio is an asynchronous runtime for Rust, built on top of
 Rust's `async` and `await` syntax. Let us start with a simple
 example of an `async` function inside a Tokio runtime.
 
-{{#playground ../../../examples/async-rust/tokio/basics.rs ignore mdbook-runnable}}
+{{#playground ../../../examples/basics.rs ignore mdbook-runnable}}
 
 Let us breakdown what is happening in the code above:
 
@@ -31,7 +31,7 @@ Maximum duration for a `sleep` is 2.2 years.
 `tokio::time::sleep` is the asynchronous equivalent of `thread::sleep`.
 It creates a future that completes after the specified duration has elapsed.
 
-{{#playground ../../../examples/async-rust/tokio/basics-time-sleep.rs ignore}}
+{{#playground ../../../examples/basics-time-sleep.rs ignore}}
 
 ## Asynchronous `interval`
 
@@ -39,7 +39,7 @@ An `Interval` creates a stream that yields values at a fixed period.
 The stream produces `()` values each time the interval elapses.
 You use `.tick().await` in a loop to wait for the next tick.
 
-{{#playground ../../../examples/async-rust/tokio/basics-time-interval.rs ignore}}
+{{#playground ../../../examples/basics-time-interval.rs ignore}}
 
 Explanation:
 
@@ -60,7 +60,7 @@ It returns a `Result`.
 * `Err(elapsed)`: The timeout elapsed before the future completed.
   The original future is cancelled when the timeout occurs.
 
-{{#playground ../../../examples/async-rust/tokio/basics-time-timeout.rs ignore}}
+{{#playground ../../../examples/basics-time-timeout.rs ignore}}
 
 Explanation:
 

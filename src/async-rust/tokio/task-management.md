@@ -5,7 +5,7 @@
 Tokio allows you to run multiple asynchronous tasks concurrently
 using `tokio::spawn`.
 
-{{#playground ../../../examples/async-rust/tokio/task-management-spawn.rs ignore}}
+{{#playground ../../../examples/task-management-spawn.rs ignore}}
 
 Let us breakdown what is happening in the code above:
 
@@ -22,7 +22,7 @@ for a shorter duration.
 Instead of `.await`ing tasks sequentially, we can wait for multiple 
 tasks concurrently using `tokio::join!`.
 
-{{#playground ../../../examples/async-rust/tokio/task-management-join.rs ignore}}
+{{#playground ../../../examples/task-management-join.rs ignore}}
 
 Let us breakdown what is happening in the code above:
 
@@ -36,7 +36,7 @@ Let us breakdown what is happening in the code above:
 Now let us combine `tokio::spawn` (for background tasks) with `tokio::join!`
 (for structured concurrency).
 
-{{#playground ../../../examples/async-rust/tokio/task-management-spawn-join.rs ignore}}
+{{#playground ../../../examples/task-management-spawn-join.rs ignore}}
 
 Let us breakdown what is happening in the code above:
 
@@ -52,7 +52,7 @@ Since `tokio::spawn` runs tasks in the background, it returns a `JoinHandle<T>`
 that we must `.await` to retrieve the result. If the task panics,
 `JoinHandle::await` will return an `Err`.
 
-{{#playground ../../../examples/async-rust/tokio/task-management-task-failure.rs ignore}}
+{{#playground ../../../examples/task-management-task-failure.rs ignore}}
 
 Let us breakdown what is happening in the code above:
 
@@ -68,7 +68,7 @@ Let us breakdown what is happening in the code above:
 Sometimes, you may want to **race multiple tasks** and cancel the slower one
 once the faster one completes. This is where `tokio::select!` comes in.
 
-{{#playground ../../../examples/async-rust/tokio/task-management-task-cancellation.rs ignore}}
+{{#playground ../../../examples/task-management-task-cancellation.rs ignore}}
 
 Breakdown of above code:
 
@@ -95,7 +95,7 @@ Sometimes you may wish to disable a particular branch based on a precondition.
 expression as defined in the pattern above. The resulting future however is not
 polled.
 
-{{#playground ../../../examples/async-rust/tokio/task-management-task-precondition.rs ignore}}
+{{#playground ../../../examples/task-management-task-precondition.rs ignore}}
 
 Breakdown of above code:
 
@@ -141,7 +141,7 @@ branch, which evaluates if none of the other branches match their patterns:
 else => <expression>
 ```
 
-{{#playground ../../../examples/async-rust/tokio/task-management-else.rs ignore}}
+{{#playground ../../../examples/task-management-else.rs ignore}}
 
 Breakdown of above code:
 
@@ -160,7 +160,7 @@ By default, `select!` uses pseudo-random mode to pick a branch randomly to check
 This is done to ensure fairness. However, this can be disabled with `biased` mode, which will 
 cause `select!` to poll futures in the order they appear (from top to bottom). 
 
-{{#playground ../../../examples/async-rust/tokio/task-management-biased.rs ignore}}
+{{#playground ../../../examples/task-management-biased.rs ignore}}
 
 The `biased;` statement at the beginning of `tokio::select!` indicates that the branches 
 should be polled in the order they are written, rather than randomly. This ensures 
@@ -209,7 +209,7 @@ ready.
 You can use Tokio's builtin `timeout` to cancel a long running
 task.
 
-{{#playground ../../../examples/async-rust/tokio/task-management-timeout.rs ignore}}
+{{#playground ../../../examples/task-management-timeout.rs ignore}}
 
 It should print `deadline has elapsed` to stderr.
 
@@ -221,7 +221,7 @@ in the order they complete.
 
 When a `JoinSet` is dropped, all tasks in the `JoinSet` are immediately aborted.
 
-{{#playground ../../../examples/async-rust/tokio/task-management-joinset.rs ignore}}
+{{#playground ../../../examples/task-management-joinset.rs ignore}}
 
 * First an empty unordered collection, called `set`, is created using `JoinSet::new`.
 * Then a collection of tasks are spawned via the `set`.
@@ -231,7 +231,7 @@ When a `JoinSet` is dropped, all tasks in the `JoinSet` are immediately aborted.
 
 You can abort a collection of tasks spawned using `JoinSet`.
 
-{{#playground ../../../examples/async-rust/tokio/task-management-joinset-abort.rs ignore}}
+{{#playground ../../../examples/task-management-joinset-abort.rs ignore}}
 
 * We use the same example as above, except for introducing a `set.abort_all()` 
   before looping over the results of the spawned tasks.
@@ -243,7 +243,7 @@ You can spawn blocking code on the blocking threadpool and store it in a `JoinSe
 Returns an `AbortHandle` much like the [Abort a `JoinSet`](#abort-a-joinset) section 
 described above.
 
-{{#playground ../../../examples/async-rust/tokio/task-management-joinset-blocking.rs ignore}}
+{{#playground ../../../examples/task-management-joinset-blocking.rs ignore}}
 
 * We calculate a simple fibonacci number using the `fib(v: usize) -> usize` function.
   This is a CPU intensive operation and hence is best handled in the blocking threadpool.

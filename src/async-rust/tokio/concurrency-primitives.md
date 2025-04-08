@@ -4,7 +4,7 @@
 
 For sending a single value from a single producer to a single consumer.
 
-{{#playground ../../../examples/async-rust/tokio/concurrency-primitives-oneshot.rs ignore}}
+{{#playground ../../../examples/concurrency-primitives-oneshot.rs ignore}}
 
 Breakdown of above code:
 
@@ -33,7 +33,7 @@ This is also a channel one should use to send multiple messages
 from single producer to single consumer as there is no dedicated `spsc`
 channel.
 
-{{#playground ../../../examples/async-rust/tokio/concurrency-primitives-mpsc.rs ignore}}
+{{#playground ../../../examples/concurrency-primitives-mpsc.rs ignore}}
 
 Breakdown of above code:
 
