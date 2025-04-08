@@ -70,3 +70,19 @@ These are helpers for efficiently transferring data between `AsyncRead` and
 * `io::copy_bidirectional(a, b)`: Copies data from `a` to `b` AND from `b`
   to `a` simultaneously. Useful for proxying network connections. Returns the
   bytes copied in each direction.
+
+## Buffered Reading/Writing: `BufReader` and `BufWriter`
+
+System calls for reading/writing small amounts of data frequently can be inefficient.
+`BufReader` and `BufWriter` wrap an existing reader/writer and add an in-memory buffer.
+
+* `BufReader<R>`: Reads large chunks from the underlying reader `R` into its buffer,
+  then serves smaller read requests from the buffer. Implements `AsyncBufRead`.
+* `BufWriter<R>`: Collects smaller writes in its buffer and writes larger chunks to
+  the underlying writer `W` when the buffer is full or `flush()` is called.
+
+{{#playground ../../../examples/io-buffered.rs ignore}}
+
+* `AsyncBufReadExt`: Provides methods like `read_line` and `lines` (returns a stream of 
+  lines) for types implementing `AsyncBufRead` (like `BufReader`).
+
